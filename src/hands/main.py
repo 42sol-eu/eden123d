@@ -1,107 +1,71 @@
-import logging  # https://docs.python.org/3/library/logging.html
+import logging
 import sys
-import click  # https://click.palletsprojects.com/
-from rich.console import Console  # https://rich.readthedocs.io/
-from robot import run_cli, rebot_cli  # https://robot-framework.readthedocs.io/
-from robot.tidy import Tidy  # https://robot-framework.readthedocs.io/en/stable/tools/Tidy.html
-from robot.libdoc import libdoc_cli  # https://robot-framework.readthedocs.io/en/stable/tools/Libdoc.html
-from robot.testdoc import testdoc_cli  # https://robot-framework.readthedocs.io/en/stable/tools/Testdoc.html
-from robot.testsplit import testsplit_cli  # https://robot-framework.readthedocs.io/en/stable/tools/Testsplit.html
+from abc import ABC, abstractmethod
+from typing import List
+import click
+from rich.console import Console
+
+console = Console()
 
 S_LOG_MSG_FORMAT = "%(asctime)s [%(levelname)-5.5s]  %(message)s"
 logging.basicConfig(level=logging.INFO, format=S_LOG_MSG_FORMAT)
 
-console = Console()
+
+class BaseRunner(ABC):
+    """Abstract base class for all test runners."""
+
+    @abstractmethod
+    def run(self, args: List[str]) -> int:
+        """Run the tests with given args and return exit code."""
+        pass
+
+
+class PytestRunner(BaseRunner):
+    def run(self, args: List[str]) -> int:
+        import pytest  # https://docs.pytest.org/
+        logging.debug("Running pytest with args=%s", args)
+        return pytest.main(list(args))
+
+
+class RobotRunner(BaseRunner):
+    def run(self, args: List[str]) -> int:
+        from robot import run_cli  # https://robot-framework.readthedocs.io/
+        logging.debug("Running robot with args=%s", args)
+        return run_cli(list(args), exit=False)
+
+
+class BehaveRunner(BaseRunner):
+    def run(self, args: List[str]) -> int:
+        from behave.__main__ import main as behave_main  # https://behave.readthedocs.io/
+        logging.debug("Running behave with args=%s", args)
+        return behave_main(list(args))
+
+
+
+
+RUNTIMES = {
+    "pytest": PytestRunner,
+    "robot": RobotRunner,
+    "behave": BehaveRunner,
+}
 
 
 @click.group()
 def cli() -> None:
-    """Pythonic CLI wrapper for Robot Framework tools."""
-    pass
+    """Unified test runner CLI."""
 
 
-# -------------------------
-# Runner: robot
-# -------------------------
 @cli.command(context_settings={"ignore_unknown_options": True})
+@click.option("--engine", type=click.Choice(RUNTIMES.keys()), default="pytest", help="Test engine to use")
 @click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def run(args: tuple[str]) -> None:
-    """Run Robot Framework test suites."""
-    logging.debug("run(args=%s)", args)
-    rc = run_cli(list(args), exit=False)
+def run(engine: str, args: tuple[str]) -> None:
+    """Run tests with chosen engine."""
+    runner_cls = RUNTIMES[engine]
+    runner = runner_cls()
+    rc = runner.run(list(args))
+
     if rc == 0:
-        console.print("[bold green]All tests passed![/bold green]")
+        console.print(f"[bold green]{engine} tests passed[/bold green]")
     else:
-        console.print(f"[bold red]{rc} test(s) failed[/bold red]")
+        console.print(f"[bold red]{engine} failed with RC={rc}[/bold red]")
     sys.exit(rc)
-
-
-# -------------------------
-# Reprocessor: rebot
-# -------------------------
-@cli.command(context_settings={"ignore_unknown_options": True})
-@click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def report(args: tuple[str]) -> None:
-    """Re-process Robot Framework outputs."""
-    logging.debug("report(args=%s)", args)
-    rc = rebot_cli(list(args), exit=False)
-    if rc == 0:
-        console.print("[bold green]Report generated successfully![/bold green]")
-    else:
-        console.print(f"[bold red]Rebot failed with RC={rc}[/bold red]")
-    sys.exit(rc)
-
-
-# -------------------------
-# Formatter: tidy
-# -------------------------
-@cli.command()
-@click.argument("paths", nargs=-1, type=click.Path(exists=True))
-@click.option("--inplace", is_flag=True, help="Modify files in place")
-def tidy(paths: tuple[str], inplace: bool) -> None:
-    """Reformat Robot Framework data files."""
-    logging.debug("tidy(paths=%s, inplace=%s)", paths, inplace)
-    tidy = Tidy(in_place=inplace)
-    for path in paths:
-        tidy.file(path)
-        console.print(f"[cyan]Tidied:[/cyan] {path}")
-
-
-# -------------------------
-# Documentation: libdoc
-# -------------------------
-@cli.command(context_settings={"ignore_unknown_options": True})
-@click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def libdoc(args: tuple[str]) -> None:
-    """Generate keyword documentation for libraries."""
-    logging.debug("libdoc(args=%s)", args)
-    rc = libdoc_cli(list(args))
-    sys.exit(rc)
-
-
-# -------------------------
-# Documentation: testdoc
-# -------------------------
-@cli.command(context_settings={"ignore_unknown_options": True})
-@click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def testdoc(args: tuple[str]) -> None:
-    """Generate high-level documentation for test suites."""
-    logging.debug("testdoc(args=%s)", args)
-    rc = testdoc_cli(list(args))
-    sys.exit(rc)
-
-
-# -------------------------
-# Suite splitter: testsplit
-# -------------------------
-@cli.command(context_settings={"ignore_unknown_options": True})
-@click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def testsplit(args: tuple[str]) -> None:
-    """Split test suites for parallel execution."""
-    logging.debug("testsplit(args=%s)", args)
-    rc = testsplit_cli(list(args))
-    sys.exit(rc)
-
-
-if __name__ == "__main__":
-    cli()
