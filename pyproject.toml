@@ -1,0 +1,17 @@
+[project]
+name = "hands"
+version = "2025.1.0"
+description = "reliable agnostic test runner"
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.2.1",
+    "rich>=14.1.0",
+    "robotframework>=7.3.2",
+    "ruff>=0.12.12",
+]
+
+[tool.poetry.workspace]
+members = ["left_palm", "right_palm", "third_palm", "thumb", "index_finger", "middle_finger"]
+
+[project.scripts]
+robotic = "main:cli"

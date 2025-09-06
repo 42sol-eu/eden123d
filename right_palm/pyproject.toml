@@ -1,0 +1,8 @@
+[project]
+name = "right_palm"
+version = "2025.1.0"
+description = "Robot Framework tests"
+requires-python = ">=3.11"
+dependencies = [
+    "robotframework>=6.1.2",
+]
