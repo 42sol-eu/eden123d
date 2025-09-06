@@ -1,5 +1,12 @@
 # README: Hands
 
+> [!Important]
+> This is a 0 release of the library. It is not yet stable and may change in the future!
+> Use at your own risk but very welcome!
+
+> [!Important]
+> This is a monorepo structure where each finger represents a separate package. The `thumb` package serves as the core, importing functionalities from other packages. This design allows for modular development and testing of each component.
+
 ```
 hand/
 ├── pyproject.toml        # (root manager for workspace, e.g. poetry or uv)

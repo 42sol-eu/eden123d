@@ -17,4 +17,11 @@ dependencies = [
 members = ["left_palm", "right_palm", "third_palm", "thumb", "index_finger", "middle_finger"]
 
 [project.scripts]
-robotic = "main:cli"
+hands = "hands.main:app"
+
+[project.entry-points.pytest11]
+robot_xml = "hands.pytest_robot_xml"
+
+[tool.pytest.ini_options]
+addopts = "--tb=short"
+testpaths = ["tests"]
