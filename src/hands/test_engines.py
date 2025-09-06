@@ -1,7 +1,9 @@
-"""Test engine abstractions and factory for running different test frameworks."""
+"""Test engine implementations for different test frameworks."""
 from __future__ import annotations
 
 import logging
+import subprocess
+import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import List
@@ -9,200 +11,217 @@ from typing import List
 log = logging.getLogger(__name__)
 
 
-class TestEngine(ABC):
+class BaseTestEngine(ABC):
     """Abstract base class for test engines."""
     
+    def __init__(self, name: str) -> None:
+        """Initialize the test engine with a name."""
+        self.name = name
+        
     @abstractmethod
     def run_tests(
         self, 
-        test_path: Path, 
+        folder: Path, 
         output_file: str, 
-        suite_name: str, 
-        engine_args: List[str]
+        verbose: bool = False,
+        extra_args: List[str] | None = None
     ) -> int:
-        """Run tests and generate Robot XML output.
+        """
+        Run tests and generate Robot Framework compatible output.
         
         Args:
-            test_path: Path to test directory or file
-            output_file: Path to output XML file
-            suite_name: Name for the test suite
-            engine_args: Additional arguments to pass to the engine
+            folder: Test folder to run
+            output_file: Output XML file path
+            verbose: Enable verbose output
+            extra_args: Additional arguments to pass to the test runner
             
         Returns:
-            Exit code (0 for success, non-zero for failure)
+            Exit code from the test run
         """
         pass
 
 
-class PytestEngine(TestEngine):
-    """Pytest test engine implementation."""
+class PytestEngine(BaseTestEngine):
+    """Pytest test engine that generates Robot Framework XML."""
+    
+    def __init__(self) -> None:
+        """Initialize the pytest engine."""
+        super().__init__("pytest")
     
     def run_tests(
         self, 
-        test_path: Path, 
+        folder: Path, 
         output_file: str, 
-        suite_name: str, 
-        engine_args: List[str]
+        verbose: bool = False,
+        extra_args: List[str] | None = None
     ) -> int:
-        """Run pytest tests with Robot XML output.
-        
-        Args:
-            test_path: Path to test directory or file
-            output_file: Path to output XML file
-            suite_name: Name for the test suite
-            engine_args: Additional arguments to pass to pytest
-            
-        Returns:
-            Exit code from pytest
-        """
-        log.info("Running pytest on %s, output: %s", test_path, output_file)
-        
+        """Run pytest tests with Robot XML output."""
         try:
             import pytest
             
             # Build pytest arguments
-            pytest_args = [
-                str(test_path),
+            args = [
+                str(folder),
                 f"--robot-output={output_file}",
-                f"--robot-suite-name={suite_name}",
+                "--robot-suite-name=Pytest Suite",
             ]
-            pytest_args.extend(engine_args)
             
-            log.debug("Pytest arguments: %s", pytest_args)
-            return pytest.main(pytest_args)
+            if verbose:
+                args.append("-v")
             
-        except ImportError as exc:
-            log.error("Pytest not available: %s", exc)
+            # Add extra arguments
+            if extra_args:
+                args.extend(extra_args)
+            
+            log.info("Running pytest with args: %s", args)
+            return pytest.main(args)
+            
+        except ImportError:
+            log.error("Pytest is not installed")
             return 1
         except Exception as exc:
             log.error("Pytest execution failed: %s", exc)
             return 1
 
 
-class RobotEngine(TestEngine):
-    """Robot Framework test engine implementation."""
+class RobotEngine(BaseTestEngine):
+    """Robot Framework test engine."""
+    
+    def __init__(self) -> None:
+        """Initialize the Robot Framework engine."""
+        super().__init__("robot")
     
     def run_tests(
         self, 
-        test_path: Path, 
+        folder: Path, 
         output_file: str, 
-        suite_name: str, 
-        engine_args: List[str]
+        verbose: bool = False,
+        extra_args: List[str] | None = None
     ) -> int:
-        """Run Robot Framework tests.
-        
-        Args:
-            test_path: Path to test directory or file
-            output_file: Path to output XML file
-            suite_name: Name for the test suite
-            engine_args: Additional arguments to pass to robot
-            
-        Returns:
-            Exit code from robot
-        """
-        log.info("Running Robot Framework on %s, output: %s", test_path, output_file)
-        
+        """Run Robot Framework tests."""
         try:
             from robot import run_cli
             
             # Build robot arguments
-            robot_args = [
+            args = [
                 "--output", output_file,
-                "--name", suite_name,
+                "--outputdir", str(folder.parent),
             ]
-            robot_args.extend(engine_args)
-            robot_args.append(str(test_path))
             
-            log.debug("Robot arguments: %s", robot_args)
-            return run_cli(robot_args, exit=False)
+            if verbose:
+                args.extend(["--loglevel", "DEBUG"])
             
-        except ImportError as exc:
-            log.error("Robot Framework not available: %s", exc)
+            # Add extra arguments
+            if extra_args:
+                args.extend(extra_args)
+            
+            # Add test folder/files
+            args.append(str(folder))
+            
+            log.info("Running robot with args: %s", args)
+            return run_cli(args, exit=False)
+            
+        except ImportError:
+            log.error("Robot Framework is not installed")
             return 1
         except Exception as exc:
             log.error("Robot Framework execution failed: %s", exc)
             return 1
 
 
-class BehaveEngine(TestEngine):
-    """Behave test engine implementation."""
+class BehaveEngine(BaseTestEngine):
+    """Behave test engine that generates Robot Framework XML."""
+    
+    def __init__(self) -> None:
+        """Initialize the behave engine."""
+        super().__init__("behave")
     
     def run_tests(
         self, 
-        test_path: Path, 
+        folder: Path, 
         output_file: str, 
-        suite_name: str, 
-        engine_args: List[str]
+        verbose: bool = False,
+        extra_args: List[str] | None = None
     ) -> int:
-        """Run Behave tests with Robot XML output.
-        
-        Args:
-            test_path: Path to test directory or file
-            output_file: Path to output XML file
-            suite_name: Name for the test suite
-            engine_args: Additional arguments to pass to behave
-            
-        Returns:
-            Exit code from behave
-        """
-        log.info("Running Behave on %s, output: %s", test_path, output_file)
-        
+        """Run behave tests with Robot XML output."""
         try:
-            from behave.__main__ import main as behave_main
-            
             # Build behave arguments
-            behave_args = [
-                str(test_path),
+            args = [
+                sys.executable, "-m", "behave",
                 "--format", "hands.behave_robot_xml:RobotXmlFormatter",
                 "--outfile", output_file,
+                str(folder),
             ]
-            behave_args.extend(engine_args)
             
-            log.debug("Behave arguments: %s", behave_args)
-            return behave_main(behave_args)
+            if verbose:
+                args.extend(["--verbose"])
             
-        except ImportError as exc:
-            log.error("Behave not available: %s", exc)
-            return 1
+            # Add extra arguments
+            if extra_args:
+                args.extend(extra_args)
+            
+            log.info("Running behave with args: %s", args)
+            result = subprocess.run(args, capture_output=False)
+            return result.returncode
+            
         except Exception as exc:
             log.error("Behave execution failed: %s", exc)
             return 1
 
 
+class GherkinPytestEngine(BaseTestEngine):
+    """Gherkin parser with pytest execution engine."""
+    
+    def __init__(self) -> None:
+        """Initialize the gherkin-pytest engine."""
+        super().__init__("gherkin-pytest")
+    
+    def run_tests(
+        self, 
+        folder: Path, 
+        output_file: str, 
+        verbose: bool = False,
+        extra_args: List[str] | None = None
+    ) -> int:
+        """Run gherkin features through pytest."""
+        # This would be implemented with a gherkin parser
+        # For now, placeholder implementation
+        log.warning("Gherkin-pytest engine not yet fully implemented")
+        return 1
+
+
 class TestEngineFactory:
     """Factory for creating test engine instances."""
     
-    def __init__(self) -> None:
-        """Initialize the factory."""
-        self._engines = {
-            'pytest': PytestEngine,
-            'robot': RobotEngine,
-            'behave': BehaveEngine,
-        }
+    _engines = {
+        "pytest": PytestEngine,
+        "robot": RobotEngine,
+        "behave": BehaveEngine,
+        "gherkin-pytest": GherkinPytestEngine,
+    }
     
-    def create_engine(self, engine_name: str) -> TestEngine:
-        """Create a test engine instance.
+    @classmethod
+    def create_engine(cls, engine_name: str) -> BaseTestEngine:
+        """
+        Create a test engine instance.
         
         Args:
-            engine_name: Name of the engine ('pytest', 'robot', 'behave')
+            engine_name: Name of the engine to create
             
         Returns:
-            TestEngine instance
+            Test engine instance
             
         Raises:
-            ValueError: If engine_name is not supported
+            ValueError: If engine name is not supported
         """
-        if engine_name not in self._engines:
-            available = ', '.join(self._engines.keys())
+        if engine_name not in cls._engines:
+            available = ", ".join(cls._engines.keys())
             raise ValueError(f"Unknown engine '{engine_name}'. Available: {available}")
         
-        engine_class = self._engines[engine_name]
+        engine_class = cls._engines[engine_name]
         return engine_class()
     
-    def get_available_engines(self) -> List[str]:
-        """Get list of available engine names.
-        
-        Returns:
-            List of engine names
-        """
-        return list(self._engines.keys())
+    @classmethod
+    def get_available_engines(cls) -> List[str]:
+        """Get list of available engine names."""
+        return list(cls._engines.keys())

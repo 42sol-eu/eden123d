@@ -44,7 +44,7 @@ def write_robot_output(
     if not tests:
         raise ValueError("No tests to write")
 
-    generated = _rf_timestamp(datetime.utcnow())
+    generated = _rf_timestamp(datetime.now(timezone.utc))
     root = ET.Element(
         "robot",
         attrib={"generator": "robotic-adapter", "generated": generated}

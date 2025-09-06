@@ -1,138 +1,160 @@
-"""Engine detection based on file patterns and project structure."""
+"""Engine detection logic for automatically determining the appropriate test runner."""
 from __future__ import annotations
 
+import importlib.util
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Dict, List
 
 log = logging.getLogger(__name__)
 
 
 class EngineDetector:
-    """Detects appropriate test engine based on file patterns and project structure."""
+    """Detects which test engine to use based on files and installed packages.
+    TODO: add robot.Gherkin and robot.python
+    """
     
     def __init__(self) -> None:
         """Initialize the engine detector."""
-        pass
+        self.supported_engines = ["pytest", "robot", "behave"]
     
-    def detect_engine(self, test_path: Path) -> str:
-        """Detect the most appropriate test engine for the given path.
+    def detect_engine(self, folder: Path, args: List[str]) -> str:
+        """
+        Detect the appropriate test engine based on file extensions and content.
         
         Args:
-            test_path: Path to test directory or file
+            folder: Test folder to analyze
+            args: Additional CLI arguments that might contain file paths
             
         Returns:
-            Engine name: 'pytest', 'robot', or 'behave'
+            Name of the detected engine
             
         Raises:
-            ValueError: If no suitable engine can be detected
+            RuntimeError: If no suitable engine is found
         """
-        log.debug("Detecting engine for path: %s", test_path)
+        log.debug("Detecting engine for folder: %s, args: %s", folder, args)
         
-        # Convert to Path if string
-        if isinstance(test_path, str):
-            test_path = Path(test_path)
-            
-        # Check if it's a specific file
-        if test_path.is_file():
-            return self._detect_from_file(test_path)
+        # Collect all potential file paths from args and folder
+        file_paths = self._collect_file_paths(folder, args)
         
-        # Check if it's a directory
-        if test_path.is_dir():
-            return self._detect_from_directory(test_path)
-            
-        # If path doesn't exist, try to infer from extension
-        return self._detect_from_file(test_path)
+        # Check for file-based hints
+        engine = self._detect_by_file_extensions(file_paths)
+        if engine:
+            log.info("Detected engine '%s' based on file extensions", engine)
+            return engine
+        
+        # Check for directory structure hints
+        engine = self._detect_by_directory_structure(folder)
+        if engine:
+            log.info("Detected engine '%s' based on directory structure", engine)
+            return engine
+        
+        # Fallback to installed packages
+        engine = self._detect_by_installed_packages()
+        if engine:
+            log.info("Detected engine '%s' based on installed packages", engine)
+            return engine
+        
+        raise RuntimeError("No supported test engine found")
     
-    def _detect_from_file(self, file_path: Path) -> str:
-        """Detect engine from a single file.
-        
-        Args:
-            file_path: Path to test file
-            
-        Returns:
-            Engine name based on file pattern
+    def get_available_engines(self) -> Dict[str, bool]:
         """
-        suffix = file_path.suffix.lower()
-        name = file_path.name.lower()
+        Get a dictionary of all supported engines and their availability.
         
-        # Robot Framework files
-        if suffix in ['.robot', '.resource']:
-            log.debug("Detected Robot Framework file: %s", file_path)
-            return 'robot'
-        
-        # Behave feature files
-        if suffix == '.feature':
-            log.debug("Detected Behave feature file: %s", file_path)
-            return 'behave'
-        
-        # Python test files - could be pytest
-        if suffix == '.py' and ('test_' in name or name.endswith('_test.py')):
-            log.debug("Detected Python test file, defaulting to pytest: %s", file_path)
-            return 'pytest'
-        
-        # Default to pytest for Python files
-        if suffix == '.py':
-            log.debug("Detected Python file, defaulting to pytest: %s", file_path)
-            return 'pytest'
-        
-        # Default fallback
-        log.warning("Could not detect engine from file %s, defaulting to pytest", file_path)
-        return 'pytest'
+        Returns:
+            Dictionary mapping engine names to their availability status
+        """
+        availability = {}
+        for engine in self.supported_engines:
+            availability[engine] = self._is_package_available(engine)
+        return availability
     
-    def _detect_from_directory(self, dir_path: Path) -> str:
-        """Detect engine from directory contents.
+    def _collect_file_paths(self, folder: Path, args: List[str]) -> List[Path]:
+        """Collect all file paths from folder and arguments."""
+        file_paths = []
         
-        Args:
-            dir_path: Path to test directory
-            
-        Returns:
-            Engine name based on directory contents
-        """
-        if not dir_path.exists():
-            log.warning("Directory does not exist: %s, defaulting to pytest", dir_path)
-            return 'pytest'
+        # Add paths from arguments that don't start with "-"
+        for arg in args:
+            if not arg.startswith("-"):
+                path = Path(arg)
+                if path.is_absolute():
+                    file_paths.append(path)
+                else:
+                    file_paths.append(folder / path)
         
-        # Count different file types
-        robot_files = list(dir_path.rglob('*.robot')) + list(dir_path.rglob('*.resource'))
-        feature_files = list(dir_path.rglob('*.feature'))
-        python_test_files = []
+        # Recursively collect files from the folder
+        if folder.exists() and folder.is_dir():
+            for pattern in ["**/*.py", "**/*.robot", "**/*.feature"]:
+                file_paths.extend(folder.glob(pattern))
         
-        # Find Python test files
-        for py_file in dir_path.rglob('*.py'):
-            name = py_file.name.lower()
-            if 'test_' in name or name.endswith('_test.py') or py_file.parent.name in ['tests', 'test']:
-                python_test_files.append(py_file)
+        return file_paths
+    
+    def _detect_by_file_extensions(self, file_paths: List[Path]) -> str | None:
+        """Detect engine based on file extensions."""
+        extension_counts = {".feature": 0, ".robot": 0, ".py": 0}
+        test_py_files = 0
         
-        log.debug("Found %d robot files, %d feature files, %d python test files", 
-                 len(robot_files), len(feature_files), len(python_test_files))
+        for path in file_paths:
+            if path.suffix in extension_counts:
+                extension_counts[path.suffix] += 1
+                
+            # Count Python test files specifically
+            if path.suffix == ".py" and (
+                path.name.startswith("test_") or 
+                path.name.endswith("_test.py") or
+                "test" in path.parts
+            ):
+                test_py_files += 1
         
-        # Decide based on file counts
-        if robot_files and len(robot_files) >= len(feature_files) and len(robot_files) >= len(python_test_files):
-            log.debug("Most files are Robot Framework, selecting robot engine")
-            return 'robot'
+        # Behave has highest priority for .feature files
+        if extension_counts[".feature"] > 0:
+            return "behave"
         
-        if feature_files and len(feature_files) >= len(python_test_files):
-            log.debug("Most files are Behave features, selecting behave engine")
-            return 'behave'
+        # Robot Framework for .robot files
+        if extension_counts[".robot"] > 0:
+            return "robot"
         
-        if python_test_files:
-            log.debug("Found Python test files, selecting pytest engine")
-            return 'pytest'
+        # Pytest for Python test files
+        if test_py_files > 0:
+            return "pytest"
         
-        # Check for configuration files
-        config_files = {
-            'pytest': ['pytest.ini', 'pyproject.toml', 'setup.cfg', 'conftest.py'],
-            'robot': ['robot.yaml', 'robot.yml'],
-            'behave': ['behave.ini', '.behaverc']
-        }
+        return None
+    
+    def _detect_by_directory_structure(self, folder: Path) -> str | None:
+        """Detect engine based on common directory structures."""
+        if not folder.exists():
+            return None
         
-        for engine, configs in config_files.items():
-            for config in configs:
-                if (dir_path / config).exists():
-                    log.debug("Found %s config file, selecting %s engine", config, engine)
-                    return engine
+        # Check for behave structure
+        features_dir = folder / "features"
+        if features_dir.exists() and any(features_dir.glob("*.feature")):
+            return "behave"
         
-        # Default fallback
-        log.warning("Could not detect engine from directory %s, defaulting to pytest", dir_path)
-        return 'pytest'
+        # Check for pytest structure
+        tests_dir = folder / "tests"
+        if tests_dir.exists() and any(tests_dir.glob("test_*.py")):
+            return "pytest"
+        
+        # Check for Robot Framework structure
+        if any(folder.glob("*.robot")) or any(folder.glob("**/*.robot")):
+            return "robot"
+        
+        return None
+    
+    def _detect_by_installed_packages(self) -> str | None:
+        """Detect engine based on installed packages (fallback)."""
+        # Priority order: pytest, robot, behave
+        for engine in ["pytest", "robot", "behave"]:
+            if self._is_package_available(engine):
+                return engine
+        return None
+    
+    def _is_package_available(self, package_name: str) -> bool:
+        """Check if a package is available for import."""
+        try:
+            # Special handling for robot framework
+            if package_name == "robot":
+                return importlib.util.find_spec("robot") is not None
+            return importlib.util.find_spec(package_name) is not None
+        except (ImportError, AttributeError, ValueError):
+            return False

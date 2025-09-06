@@ -1,0 +1,10 @@
+[project]
+name = "snark"
+version = "0.1.0"
+description = "Snark is an informal word that refers to an attitude or expression of mocking irreverence and sarcasm. It can be used to describe witty, cutting remarks or a general tone of disdainful humor. " 
+# source: https://www.merriam-webster.com/word-of-the-day/snark-2025-04-03#:~:text=Snark%20is%20an%20informal%20word,audience%20rolling%20in%20the%20aisles.
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mycapytain>=3.0.2",
+]

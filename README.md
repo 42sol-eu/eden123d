@@ -15,12 +15,24 @@ It should further more be easy to get into the pipeline and CI/CD workflows, why
 
 The `hands` package aims to provide a modular and extensible framework for managing and interacting with various devices and services. It is designed to be flexible, allowing users to integrate different communication protocols, testing frameworks, and logging mechanisms seamlessly.
 
+## TODOs:
+
+TODO: would nuitka help this project to be more portable?
+TODO: think about generic requirement mapping (base url / req-id)
+TODO: think about adding unittests for the runner 
 
 ## Usage (cli)
 
 ```bash
 pip install hands
 ```
+
+Integrate into your project with your favorite package manager, e.g.
+
+```bash
+uv add hands
+```
+
 
 ## Structure
 

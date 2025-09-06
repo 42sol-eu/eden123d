@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.12.8 on darwin)" generated="2025-09-06T16:25:11.125901" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot" source="/Users/felix/Desktop/42/1_Sprints/hands/tests/examples/robot">
+<suite id="s1-s1" name="Robot Examples" source="/Users/felix/Desktop/42/1_Sprints/hands/tests/examples/robot/robot_examples.robot">
+<test id="s1-s1-t1" name="Test Basic Addition" line="12">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.150421" level="INFO">${result} = 5</msg>
+<var>${result}</var>
+<arg>2 + 3</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.150294" elapsed="0.000147"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.150625" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${result}</arg>
+<arg>5</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.150542" elapsed="0.000119"/>
+</kw>
+<doc>Test that basic addition works correctly</doc>
+<tag>basic</tag>
+<tag>math</tag>
+<status status="PASS" start="2025-09-06T16:25:11.149795" elapsed="0.000939"/>
+</test>
+<test id="s1-s1-t2" name="Test Basic Subtraction" line="18">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.151057" level="INFO">${result} = 6</msg>
+<var>${result}</var>
+<arg>10 - 4</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.150978" elapsed="0.000091"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.151178" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${result}</arg>
+<arg>6</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.151125" elapsed="0.000077"/>
+</kw>
+<doc>Test that basic subtraction works correctly</doc>
+<tag>basic</tag>
+<tag>math</tag>
+<status status="PASS" start="2025-09-06T16:25:11.150827" elapsed="0.000426"/>
+</test>
+<test id="s1-s1-t3" name="Test Basic Multiplication" line="24">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.151539" level="INFO">${result} = 42</msg>
+<var>${result}</var>
+<arg>6 * 7</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.151473" elapsed="0.000076"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.151646" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${result}</arg>
+<arg>42</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.151598" elapsed="0.000070"/>
+</kw>
+<doc>Test that basic multiplication works correctly</doc>
+<tag>basic</tag>
+<tag>math</tag>
+<status status="PASS" start="2025-09-06T16:25:11.151330" elapsed="0.000386"/>
+</test>
+<test id="s1-s1-t4" name="Test Basic Division" line="30">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.151972" level="INFO">${result} = 5.0</msg>
+<var>${result}</var>
+<arg>15 / 3</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.151912" elapsed="0.000070"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.152075" level="INFO">Argument types are:
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${result}</arg>
+<arg>5</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152029" elapsed="0.000065"/>
+</kw>
+<doc>Test that basic division works correctly</doc>
+<tag>basic</tag>
+<tag>math</tag>
+<status status="PASS" start="2025-09-06T16:25:11.151786" elapsed="0.000354"/>
+</test>
+<test id="s1-s1-t5" name="Test String Operations" line="36">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.152371" level="INFO">${text} = Hello World</msg>
+<var>${text}</var>
+<arg>Hello World</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152326" elapsed="0.000054"/>
+</kw>
+<kw name="Convert To Lower Case" owner="String">
+<msg time="2025-09-06T16:25:11.152479" level="INFO">${lower} = hello world</msg>
+<var>${lower}</var>
+<arg>${text}</arg>
+<doc>Converts string to lower case.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152425" elapsed="0.000063"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.152584" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${lower}</arg>
+<arg>hello world</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152538" elapsed="0.000064"/>
+</kw>
+<kw name="Convert To Upper Case" owner="String">
+<msg time="2025-09-06T16:25:11.152699" level="INFO">${upper} = HELLO WORLD</msg>
+<var>${upper}</var>
+<arg>${text}</arg>
+<doc>Converts string to upper case.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152647" elapsed="0.000061"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.152796" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${upper}</arg>
+<arg>HELLO WORLD</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152753" elapsed="0.000061"/>
+</kw>
+<kw name="Replace String" owner="String">
+<msg time="2025-09-06T16:25:11.152917" level="INFO">${replaced} = Hi World</msg>
+<var>${replaced}</var>
+<arg>${text}</arg>
+<arg>Hello</arg>
+<arg>Hi</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152860" elapsed="0.000066"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.153020" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${replaced}</arg>
+<arg>Hi World</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.152976" elapsed="0.000062"/>
+</kw>
+<doc>Test various string operations</doc>
+<tag>string</tag>
+<status status="PASS" start="2025-09-06T16:25:11.152207" elapsed="0.000875"/>
+</test>
+<test id="s1-s1-t6" name="Test List Operations" line="49">
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.153327" level="INFO">@{numbers} = [ 1 | 2 | 3 | 4 | 5 ]</msg>
+<var>@{numbers}</var>
+<arg>1</arg>
+<arg>2</arg>
+<arg>3</arg>
+<arg>4</arg>
+<arg>5</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.153267" elapsed="0.000070"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.153432" level="INFO">Length is 5.</msg>
+<msg time="2025-09-06T16:25:11.153457" level="INFO">${length} = 5</msg>
+<var>${length}</var>
+<arg>${numbers}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.153390" elapsed="0.000075"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.153555" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${length}</arg>
+<arg>5</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.153510" elapsed="0.000066"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-09-06T16:25:11.153678" level="INFO">${first} = 1</msg>
+<var>${first}</var>
+<arg>${numbers}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.153622" elapsed="0.000065"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.153779" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${first}</arg>
+<arg>1</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.153735" elapsed="0.000156"/>
+</kw>
+<kw name="Append To List" owner="Collections">
+<arg>${numbers}</arg>
+<arg>6</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.153936" elapsed="0.000046"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.154063" level="INFO">Length is 6.</msg>
+<msg time="2025-09-06T16:25:11.154088" level="INFO">${new_length} = 6</msg>
+<var>${new_length}</var>
+<arg>${numbers}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.154027" elapsed="0.000069"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.154186" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${new_length}</arg>
+<arg>6</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.154141" elapsed="0.000064"/>
+</kw>
+<doc>Test list operations and collections</doc>
+<tag>collections</tag>
+<status status="PASS" start="2025-09-06T16:25:11.153149" elapsed="0.001100"/>
+</test>
+<test id="s1-s1-t7" name="Test Data-Driven Calculations" line="63">
+<kw name="Verify Calculation">
+<kw name="Setup Calculator">
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.155118" level="INFO">${CALCULATOR_RESULT} = 0</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>0</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.155025" elapsed="0.000113"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.155410" level="INFO">${ERROR_MESSAGE} = </msg>
+<arg>${ERROR_MESSAGE}</arg>
+<arg>${EMPTY}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.155189" elapsed="0.000239"/>
+</kw>
+<doc>Initialize calculator for testing</doc>
+<status status="PASS" start="2025-09-06T16:25:11.154927" elapsed="0.000529"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.155662" level="INFO">Entering number: 2</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.155610" elapsed="0.000070"/>
+</kw>
+<arg>${first}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.155508" elapsed="0.000194"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.155887" level="INFO">Entering number: 3</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.155840" elapsed="0.000063"/>
+</kw>
+<arg>${second}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.155747" elapsed="0.000176"/>
+</kw>
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Perform Add">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.156218" level="INFO">${result} = 5</msg>
+<var>${result}</var>
+<arg>${CALCULATOR_RESULT} + 5</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156122" elapsed="0.000107"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.156352" level="INFO">${CALCULATOR_RESULT} = 5</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${result}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156268" elapsed="0.000098"/>
+</kw>
+<doc>Perform addition operation</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156043" elapsed="0.000345"/>
+</kw>
+<arg>Perform ${operation}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.155958" elapsed="0.000445"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.156507" level="INFO">${CALCULATOR_RESULT} = 5</msg>
+<var>${CALCULATOR_RESULT}</var>
+<arg>${CALCULATOR_RESULT}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156439" elapsed="0.000077"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.156607" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${expected}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156552" elapsed="0.000079"/>
+</kw>
+<arg>2</arg>
+<arg>3</arg>
+<arg>add</arg>
+<arg>5</arg>
+<doc>Template keyword for testing calculations</doc>
+<status status="PASS" start="2025-09-06T16:25:11.154747" elapsed="0.001905"/>
+</kw>
+<kw name="Verify Calculation">
+<kw name="Setup Calculator">
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.157015" level="INFO">${CALCULATOR_RESULT} = 0</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>0</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156939" elapsed="0.000091"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.157265" level="INFO">${ERROR_MESSAGE} = </msg>
+<arg>${ERROR_MESSAGE}</arg>
+<arg>${EMPTY}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157067" elapsed="0.000215"/>
+</kw>
+<doc>Initialize calculator for testing</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156866" elapsed="0.000441"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.157503" level="INFO">Entering number: 10</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157457" elapsed="0.000061"/>
+</kw>
+<arg>${first}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157351" elapsed="0.000187"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.157717" level="INFO">Entering number: 4</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157673" elapsed="0.000059"/>
+</kw>
+<arg>${second}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157579" elapsed="0.000172"/>
+</kw>
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Perform Subtract">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.158002" level="INFO">${result} = 6</msg>
+<var>${result}</var>
+<arg>10 - 4</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157935" elapsed="0.000076"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.158127" level="INFO">${CALCULATOR_RESULT} = 6</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${result}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.158047" elapsed="0.000094"/>
+</kw>
+<doc>Perform subtraction operation</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157861" elapsed="0.000301"/>
+</kw>
+<arg>Perform ${operation}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.157784" elapsed="0.000392"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.158278" level="INFO">${CALCULATOR_RESULT} = 6</msg>
+<var>${CALCULATOR_RESULT}</var>
+<arg>${CALCULATOR_RESULT}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.158212" elapsed="0.000075"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.158436" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${expected}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.158380" elapsed="0.000078"/>
+</kw>
+<arg>10</arg>
+<arg>4</arg>
+<arg>subtract</arg>
+<arg>6</arg>
+<doc>Template keyword for testing calculations</doc>
+<status status="PASS" start="2025-09-06T16:25:11.156753" elapsed="0.001726"/>
+</kw>
+<kw name="Verify Calculation">
+<kw name="Setup Calculator">
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.158812" level="INFO">${CALCULATOR_RESULT} = 0</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>0</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.158738" elapsed="0.000089"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.159057" level="INFO">${ERROR_MESSAGE} = </msg>
+<arg>${ERROR_MESSAGE}</arg>
+<arg>${EMPTY}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.158864" elapsed="0.000209"/>
+</kw>
+<doc>Initialize calculator for testing</doc>
+<status status="PASS" start="2025-09-06T16:25:11.158663" elapsed="0.000432"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.159346" level="INFO">Entering number: 6</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.159227" elapsed="0.000136"/>
+</kw>
+<arg>${first}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.159136" elapsed="0.000248"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.159566" level="INFO">Entering number: 7</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.159517" elapsed="0.000065"/>
+</kw>
+<arg>${second}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.159427" elapsed="0.000175"/>
+</kw>
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Perform Multiply">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.159993" level="INFO">${result} = 42</msg>
+<var>${result}</var>
+<arg>6 * 7</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.159784" elapsed="0.000294"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.160434" level="INFO">${CALCULATOR_RESULT} = 42</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${result}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.160284" elapsed="0.000228"/>
+</kw>
+<doc>Perform multiplication operation</doc>
+<status status="PASS" start="2025-09-06T16:25:11.159710" elapsed="0.000840"/>
+</kw>
+<arg>Perform ${operation}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.159636" elapsed="0.000933"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.160714" level="INFO">${CALCULATOR_RESULT} = 42</msg>
+<var>${CALCULATOR_RESULT}</var>
+<arg>${CALCULATOR_RESULT}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.160620" elapsed="0.000105"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.160838" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${expected}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.160769" elapsed="0.000100"/>
+</kw>
+<arg>6</arg>
+<arg>7</arg>
+<arg>multiply</arg>
+<arg>42</arg>
+<doc>Template keyword for testing calculations</doc>
+<status status="PASS" start="2025-09-06T16:25:11.158553" elapsed="0.002341"/>
+</kw>
+<kw name="Verify Calculation">
+<kw name="Setup Calculator">
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.161303" level="INFO">${CALCULATOR_RESULT} = 0</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>0</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161224" elapsed="0.000095"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.161566" level="INFO">${ERROR_MESSAGE} = </msg>
+<arg>${ERROR_MESSAGE}</arg>
+<arg>${EMPTY}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161358" elapsed="0.000225"/>
+</kw>
+<doc>Initialize calculator for testing</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161143" elapsed="0.000464"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.161794" level="INFO">Entering number: 15</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161746" elapsed="0.000063"/>
+</kw>
+<arg>${first}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161651" elapsed="0.000181"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.162002" level="INFO">Entering number: 3</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161960" elapsed="0.000057"/>
+</kw>
+<arg>${second}</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161872" elapsed="0.000164"/>
+</kw>
+<kw name="Run Keyword" owner="BuiltIn">
+<kw name="Perform Divide">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.162300" level="INFO">${result} = 5.0</msg>
+<var>${result}</var>
+<arg>15 / 3</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.162223" elapsed="0.000087"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.162536" level="INFO">${CALCULATOR_RESULT} = 5.0</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${result}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.162348" elapsed="0.000214"/>
+</kw>
+<doc>Perform division operation</doc>
+<status status="PASS" start="2025-09-06T16:25:11.162149" elapsed="0.000444"/>
+</kw>
+<arg>Perform ${operation}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.162069" elapsed="0.000541"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.162731" level="INFO">${CALCULATOR_RESULT} = 5.0</msg>
+<var>${CALCULATOR_RESULT}</var>
+<arg>${CALCULATOR_RESULT}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.162654" elapsed="0.000087"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.162839" level="INFO">Argument types are:
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${expected}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.162781" elapsed="0.000082"/>
+</kw>
+<arg>15</arg>
+<arg>3</arg>
+<arg>divide</arg>
+<arg>5</arg>
+<doc>Template keyword for testing calculations</doc>
+<status status="PASS" start="2025-09-06T16:25:11.161007" elapsed="0.001879"/>
+</kw>
+<doc>Test calculations with multiple data sets</doc>
+<tag>data-driven</tag>
+<tag>math</tag>
+<status status="PASS" start="2025-09-06T16:25:11.154328" elapsed="0.008623"/>
+</test>
+<test id="s1-s1-t8" name="Test Complex Scenario" line="72">
+<kw name="Setup Calculator">
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.163452" level="INFO">${CALCULATOR_RESULT} = 0</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>0</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.163378" elapsed="0.000092"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.163703" level="INFO">${ERROR_MESSAGE} = </msg>
+<arg>${ERROR_MESSAGE}</arg>
+<arg>${EMPTY}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.163511" elapsed="0.000209"/>
+</kw>
+<doc>Initialize calculator for testing</doc>
+<status status="PASS" start="2025-09-06T16:25:11.163287" elapsed="0.000458"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.163945" level="INFO">Entering number: 100</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.163895" elapsed="0.000067"/>
+</kw>
+<arg>100</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.163808" elapsed="0.000174"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.164164" level="INFO">Entering number: 50</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.164121" elapsed="0.000059"/>
+</kw>
+<arg>50</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.164039" elapsed="0.000160"/>
+</kw>
+<kw name="Perform Complex Operation">
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.265305" level="INFO">Slept 100 milliseconds.</msg>
+<arg>0.1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.164333" elapsed="0.101072"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.265721" level="INFO">${result} = 290</msg>
+<var>${result}</var>
+<arg>(100 + 50) * 2 - 10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.265528" elapsed="0.000211"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.265971" level="INFO">${CALCULATOR_RESULT} = 290</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${result}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.265815" elapsed="0.000182"/>
+</kw>
+<doc>Perform a complex calculation</doc>
+<status status="PASS" start="2025-09-06T16:25:11.164258" elapsed="0.101779"/>
+</kw>
+<kw name="Result Should Be Positive">
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${CALCULATOR_RESULT} &gt; 0</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.266318" elapsed="0.000123"/>
+</kw>
+<doc>Verify that the result is positive</doc>
+<status status="PASS" start="2025-09-06T16:25:11.266168" elapsed="0.000309"/>
+</kw>
+<doc>Test a complex scenario with multiple steps</doc>
+<tag>complex</tag>
+<tag>slow</tag>
+<status status="PASS" start="2025-09-06T16:25:11.163112" elapsed="0.103449"/>
+</test>
+<test id="s1-s1-t9" name="Test Error Handling" line="81">
+<kw name="Setup Calculator">
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.267360" level="INFO">${CALCULATOR_RESULT} = 0</msg>
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>0</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.267235" elapsed="0.000150"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.267774" level="INFO">${ERROR_MESSAGE} = </msg>
+<arg>${ERROR_MESSAGE}</arg>
+<arg>${EMPTY}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.267445" elapsed="0.000355"/>
+</kw>
+<doc>Initialize calculator for testing</doc>
+<status status="PASS" start="2025-09-06T16:25:11.266930" elapsed="0.000906"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.268136" level="INFO">Entering number: 10</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.268064" elapsed="0.000096"/>
+</kw>
+<arg>10</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.267930" elapsed="0.000260"/>
+</kw>
+<kw name="Enter Number">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.268466" level="INFO">Entering number: 0</msg>
+<arg>Entering number: ${number}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.268398" elapsed="0.000092"/>
+</kw>
+<arg>0</arg>
+<doc>Enter a number (simulated)</doc>
+<status status="PASS" start="2025-09-06T16:25:11.268271" elapsed="0.000249"/>
+</kw>
+<kw name="Run Keyword And Expect Error" owner="BuiltIn">
+<kw name="Perform Division">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.268939" level="FAIL">Evaluating expression '10 / 0' failed: ZeroDivisionError: division by zero</msg>
+<msg time="2025-09-06T16:25:11.269085" level="DEBUG">robot.errors.DataError: Evaluating expression '10 / 0' failed: ZeroDivisionError: division by zero
+
+During handling of the above exception, another exception occurred:
+
+RuntimeError: Evaluating expression '10 / 0' failed: ZeroDivisionError: division by zero</msg>
+<var>${result}</var>
+<arg>10 / 0</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="FAIL" start="2025-09-06T16:25:11.268800" elapsed="0.000307">Evaluating expression '10 / 0' failed: ZeroDivisionError: division by zero</status>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<arg>${CALCULATOR_RESULT}</arg>
+<arg>${result}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="NOT RUN" start="2025-09-06T16:25:11.269183" elapsed="0.000012"/>
+</kw>
+<doc>Perform division with error handling</doc>
+<status status="FAIL" start="2025-09-06T16:25:11.268688" elapsed="0.000581">Evaluating expression '10 / 0' failed: ZeroDivisionError: division by zero</status>
+</kw>
+<arg>*</arg>
+<arg>Perform Division</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<status status="PASS" start="2025-09-06T16:25:11.268594" elapsed="0.000794"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2025-09-06T16:25:11.269541" level="INFO">Length is 0.</msg>
+<msg time="2025-09-06T16:25:11.269586" level="FAIL">'' should not be empty.</msg>
+<msg time="2025-09-06T16:25:11.269618" level="DEBUG">Traceback (most recent call last):
+  None
+AssertionError: '' should not be empty.</msg>
+<arg>${ERROR_MESSAGE}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="FAIL" start="2025-09-06T16:25:11.269467" elapsed="0.000165">'' should not be empty.</status>
+</kw>
+<doc>Test error handling scenarios</doc>
+<tag>error_handling</tag>
+<status status="FAIL" start="2025-09-06T16:25:11.266682" elapsed="0.003053">'' should not be empty.</status>
+</test>
+<doc>Sample Robot Framework tests for the agnostic test runner</doc>
+<status status="FAIL" start="2025-09-06T16:25:11.143997" elapsed="0.125987"/>
+</suite>
+<suite id="s1-s2" name="Tests" source="/Users/felix/Desktop/42/1_Sprints/hands/tests/examples/robot/tests">
+<suite id="s1-s2-s1" name="Python Calculator" source="/Users/felix/Desktop/42/1_Sprints/hands/tests/examples/robot/tests/python_calculator.robot">
+<test id="s1-s2-s1-t1" name="Test Addition With Custom Library" line="7">
+<kw name="Reset Calculator">
+<msg time="2025-09-06T16:25:11.275100" level="FAIL">No keyword with name 'Reset Calculator' found.</msg>
+<status status="FAIL" start="2025-09-06T16:25:11.275076" elapsed="0.000118">No keyword with name 'Reset Calculator' found.</status>
+</kw>
+<kw name="Add Numbers">
+<var>${result}</var>
+<arg>5</arg>
+<arg>3</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.275296" elapsed="0.000012"/>
+</kw>
+<kw name="Result Should Be">
+<arg>8</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.275388" elapsed="0.000009"/>
+</kw>
+<kw name="Get Last Result">
+<var>${last_result}</var>
+<status status="NOT RUN" start="2025-09-06T16:25:11.275457" elapsed="0.000014"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${last_result}</arg>
+<arg>8</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="NOT RUN" start="2025-09-06T16:25:11.275531" elapsed="0.000011"/>
+</kw>
+<doc>Test addition using Python library</doc>
+<tag>calculator</tag>
+<tag>python</tag>
+<status status="FAIL" start="2025-09-06T16:25:11.273905" elapsed="0.001735">No keyword with name 'Reset Calculator' found.</status>
+</test>
+<test id="s1-s2-s1-t2" name="Test Subtraction With Custom Library" line="16">
+<kw name="Reset Calculator">
+<msg time="2025-09-06T16:25:11.276575" level="FAIL">No keyword with name 'Reset Calculator' found.</msg>
+<status status="FAIL" start="2025-09-06T16:25:11.276561" elapsed="0.000034">No keyword with name 'Reset Calculator' found.</status>
+</kw>
+<kw name="Subtract Numbers">
+<var>${result}</var>
+<arg>10</arg>
+<arg>4</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.276665" elapsed="0.000009"/>
+</kw>
+<kw name="Result Should Be">
+<arg>6</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.276733" elapsed="0.000009"/>
+</kw>
+<doc>Test subtraction using Python library</doc>
+<tag>calculator</tag>
+<tag>python</tag>
+<status status="FAIL" start="2025-09-06T16:25:11.275752" elapsed="0.001064">No keyword with name 'Reset Calculator' found.</status>
+</test>
+<test id="s1-s2-s1-t3" name="Test Multiplication With Custom Library" line="23">
+<kw name="Reset Calculator">
+<msg time="2025-09-06T16:25:11.277752" level="FAIL">No keyword with name 'Reset Calculator' found.</msg>
+<status status="FAIL" start="2025-09-06T16:25:11.277738" elapsed="0.000033">No keyword with name 'Reset Calculator' found.</status>
+</kw>
+<kw name="Multiply Numbers">
+<var>${result}</var>
+<arg>6</arg>
+<arg>7</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.277838" elapsed="0.000010"/>
+</kw>
+<kw name="Result Should Be">
+<arg>42</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.277906" elapsed="0.000008"/>
+</kw>
+<doc>Test multiplication using Python library</doc>
+<tag>calculator</tag>
+<tag>python</tag>
+<status status="FAIL" start="2025-09-06T16:25:11.276920" elapsed="0.001067">No keyword with name 'Reset Calculator' found.</status>
+</test>
+<test id="s1-s2-s1-t4" name="Test Division With Custom Library" line="30">
+<kw name="Reset Calculator">
+<msg time="2025-09-06T16:25:11.278886" level="FAIL">No keyword with name 'Reset Calculator' found.</msg>
+<status status="FAIL" start="2025-09-06T16:25:11.278872" elapsed="0.000032">No keyword with name 'Reset Calculator' found.</status>
+</kw>
+<kw name="Divide Numbers">
+<var>${result}</var>
+<arg>15</arg>
+<arg>3</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.278971" elapsed="0.000010"/>
+</kw>
+<kw name="Result Should Be">
+<arg>5</arg>
+<status status="NOT RUN" start="2025-09-06T16:25:11.279082" elapsed="0.000015"/>
+</kw>
+<doc>Test division using Python library</doc>
+<tag>calculator</tag>
+<tag>python</tag>
+<status status="FAIL" start="2025-09-06T16:25:11.278089" elapsed="0.001099">No keyword with name 'Reset Calculator' found.</status>
+</test>
+<test id="s1-s2-s1-t5" name="Test Division By Zero Error" line="37">
+<kw name="Reset Calculator">
+<msg time="2025-09-06T16:25:11.280129" level="FAIL">No keyword with name 'Reset Calculator' found.</msg>
+<status status="FAIL" start="2025-09-06T16:25:11.280115" elapsed="0.000033">No keyword with name 'Reset Calculator' found.</status>
+</kw>
+<kw name="Run Keyword And Expect Error" owner="BuiltIn">
+<arg>ValueError: Cannot divide by zero</arg>
+<arg>Divide Numbers</arg>
+<arg>10</arg>
+<arg>0</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<status status="NOT RUN" start="2025-09-06T16:25:11.280223" elapsed="0.000011"/>
+</kw>
+<doc>Test that division by zero raises an error</doc>
+<tag>calculator</tag>
+<tag>error</tag>
+<tag>python</tag>
+<status status="FAIL" start="2025-09-06T16:25:11.279298" elapsed="0.001015">No keyword with name 'Reset Calculator' found.</status>
+</test>
+<doc>Python-based Robot Framework tests using custom library</doc>
+<status status="FAIL" start="2025-09-06T16:25:11.271140" elapsed="0.009317"/>
+</suite>
+<status status="FAIL" start="2025-09-06T16:25:11.270322" elapsed="0.010429"/>
+</suite>
+<status status="FAIL" start="2025-09-06T16:25:11.127220" elapsed="0.153753"/>
+</suite>
+<statistics>
+<total>
+<stat pass="8" fail="6" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="4" fail="0" skip="0">basic</stat>
+<stat pass="0" fail="5" skip="0">calculator</stat>
+<stat pass="1" fail="0" skip="0">collections</stat>
+<stat pass="1" fail="0" skip="0">complex</stat>
+<stat pass="1" fail="0" skip="0">data-driven</stat>
+<stat pass="0" fail="1" skip="0">error</stat>
+<stat pass="0" fail="1" skip="0">error_handling</stat>
+<stat pass="5" fail="0" skip="0">math</stat>
+<stat pass="0" fail="5" skip="0">python</stat>
+<stat pass="1" fail="0" skip="0">slow</stat>
+<stat pass="1" fail="0" skip="0">string</stat>
+</tag>
+<suite>
+<stat name="Robot" id="s1" pass="8" fail="6" skip="0">Robot</stat>
+<stat name="Robot Examples" id="s1-s1" pass="8" fail="1" skip="0">Robot.Robot Examples</stat>
+<stat name="Tests" id="s1-s2" pass="0" fail="5" skip="0">Robot.Tests</stat>
+<stat name="Python Calculator" id="s1-s2-s1" pass="0" fail="5" skip="0">Robot.Tests.Python Calculator</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-09-06T16:25:11.273431" level="ERROR">Error in file '/Users/felix/Desktop/42/1_Sprints/hands/tests/examples/robot/tests/python_calculator.robot' on line 3: Importing library 'CalculatorLibrary' failed: ModuleNotFoundError: No module named 'CalculatorLibrary'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  /Users/felix/miniforge3/bin
+  /Users/felix/miniforge3/lib/python312.zip
+  /Users/felix/miniforge3/lib/python3.12
+  /Users/felix/miniforge3/lib/python3.12/lib-dynload
+  /Users/felix/miniforge3/lib/python3.12/site-packages
+  /Users/felix/Desktop/42/1_Sprints/hands/src
+  /Users/felix/Desktop/42/1_Sprints/Devorah/src
+  /Users/felix/Desktop/42/2_Projects/noah123d/src
+  /Users/felix/Desktop/42/1_Sprints/thonny-zero123d/src</msg>
+</errors>
+</robot>

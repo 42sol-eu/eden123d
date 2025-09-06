@@ -13,15 +13,18 @@ dependencies = [
     "typer>=0.17.4",
 ]
 
+[project.optional-dependencies]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocs-autorefs>=0.5.0",
+]
+
 [tool.poetry.workspace]
 members = ["left_palm", "right_palm", "third_palm", "thumb", "index_finger", "middle_finger"]
 
 [project.scripts]
-hands = "hands.main:app"
+hands = "hands.main:cli"
 
 [project.entry-points.pytest11]
-robot_xml = "hands.pytest_robot_xml"
-
-[tool.pytest.ini_options]
-addopts = "--tb=short"
-testpaths = ["tests"]
+pytest_robot_xml = "hands.pytest_robot_xml"

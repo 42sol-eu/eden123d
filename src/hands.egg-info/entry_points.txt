@@ -1,5 +1,5 @@
 [console_scripts]
-hands = hands.main:app
+hands = hands.main:cli
 
 [pytest11]
-robot_xml = hands.pytest_robot_xml
+pytest_robot_xml = hands.pytest_robot_xml
