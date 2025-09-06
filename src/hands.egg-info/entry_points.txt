@@ -1,0 +1,5 @@
+[console_scripts]
+hands = hands.main:app
+
+[pytest11]
+robot_xml = hands.pytest_robot_xml

@@ -1,0 +1,79 @@
+site_name: Hands - Agnostic Test Runner
+site_description: Unified test runner for pytest, robot framework, and behave that generates consistent Robot XML output
+site_url: https://42sol-eu.github.io/hands
+repo_url: https://github.com/42sol-eu/hands
+repo_name: 42sol-eu/hands
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+
+plugins:
+  - search
+  - autorefs
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quick-start.md
+  - User Guide:
+    - Running Tests: user-guide/running-tests.md
+    - Engine Auto-Detection: user-guide/engine-detection.md
+    - Generating Reports: user-guide/reports.md
+    - CLI Reference: user-guide/cli-reference.md
+  - Examples:
+    - Pytest Examples: examples/pytest.md
+    - Robot Framework Examples: examples/robot.md
+    - Behave Examples: examples/behave.md
+  - Developer Guide:
+    - Architecture: developer/architecture.md
+    - Contributing: developer/contributing.md
+    - API Reference: developer/api.md

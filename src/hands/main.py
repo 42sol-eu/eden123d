@@ -29,7 +29,7 @@ def _exit(rc: int) -> None:
     raise typer.Exit(code=rc)
 
 
-@app.command()
+@app.command("run")
 def run(
     test_path: str = typer.Argument(".", help="Path to test directory or file"),
     engine: Optional[str] = typer.Option(None, "--engine", "-e",
@@ -74,6 +74,37 @@ def run(
         )
     except Exception as exc:  # noqa: BLE001
         log.error("Engine failed: %s", exc)
+        rc = 3
+    _exit(rc)
+
+
+@app.command("report")
+def report(
+    input_files: List[str] = typer.Argument(..., help="Robot XML files to combine"),
+    output: str = typer.Option("report.html", "--output", "-o", help="Output HTML report file"),
+    args: List[str] = typer.Option([], "--args", help="Additional arguments passed to rebot"),
+) -> None:
+    """Generate combined HTML reports from Robot XML files using rebot.
+    
+    This command leverages robotframework's rebot tool to create unified reports
+    from multiple output.xml files, regardless of which test engines generated them.
+    """
+    log.debug("report(input_files=%s, output=%s, args=%s)", input_files, output, args)
+    
+    # Build rebot command arguments
+    rebot_args = []
+    rebot_args.extend(["--output", "NONE"])  # Don't generate output.xml
+    rebot_args.extend(["--report", output])
+    rebot_args.extend(args)  # Additional user arguments
+    rebot_args.extend(input_files)  # Input XML files
+    
+    try:
+        from robot import rebot_cli  # https://robot-framework.readthedocs.io/en/stable/autodoc/robot.html
+        rc = rebot_cli(rebot_args, exit=False)
+        if rc == 0:
+            console.print(f"[green]Report generated: {output}[/green]")
+    except Exception as exc:  # noqa: BLE001
+        log.error("rebot failed: %s", exc)
         rc = 3
     _exit(rc)
 

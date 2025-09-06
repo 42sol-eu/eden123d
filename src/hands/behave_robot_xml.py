@@ -22,7 +22,16 @@ class RobotXmlFormatter(Formatter):
         super().__init__(stream, config)
         self.results: List[TestResult] = []
         self.suite_name = getattr(config, "robot_suite_name", "Behave Suite")
+        # Get output file from config.outfile, which behave sets from --outfile
         self.out_path = getattr(config, "outfile", "output.xml")
+        if hasattr(config, "outputs") and config.outputs:
+            # Use the first output file if multiple are specified
+            self.out_path = config.outputs[0].name
+        self.features = []
+
+    def feature(self, feature) -> None:
+        """Record feature for later processing."""
+        self.features.append(feature)
 
     def scenario(self, scenario) -> None:
         """Record scenario start."""
@@ -39,13 +48,6 @@ class RobotXmlFormatter(Formatter):
 
     def close(self) -> None:
         """At the end, convert all scenarios to TestResult and write XML."""
-        try:
-            for feat in self.feature.results:
-                pass
-        except Exception:
-            # Some behave versions don't expose feature.results; fall back to model traversal
-            pass
-
         for feature in self.features:
             for scenario in feature.scenarios:
                 start = getattr(scenario, "_robotic_start", datetime.now(tz=timezone.utc))
@@ -72,6 +74,7 @@ class RobotXmlFormatter(Formatter):
                     )
                 )
         try:
-            write_robot_output(self.suite_name, self.results, self.out_path)
+            if self.results:  # Only write if we have results
+                write_robot_output(self.suite_name, self.results, self.out_path)
         except Exception as exc:  # noqa: BLE001
             logger.error("Failed writing Robot XML: %s", exc)
